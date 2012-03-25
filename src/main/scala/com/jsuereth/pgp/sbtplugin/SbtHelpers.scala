@@ -11,7 +11,7 @@ object SbtHelpers {
   /** Helper method to switch between two initializers based on
    * the value of the switch setting.
    */
-  def switch[T](switch: SettingKey[Boolean],
+  def switch[T](switch: Initialize[Boolean],
                            iftrue: Initialize[T],
                            iffalse: Initialize[T]): Initialize[T] =
     switch.zipWith(iftrue) { (use, first) =>

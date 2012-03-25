@@ -7,6 +7,7 @@ import scala.util.control.Exception._
 import sbt._
 import Keys._
 import com.jsuereth.pgp.cli.PgpCommandContext
+import packageobject._
 
 trait PgpVerifier {
   def verifySignature(signatureFile: File, s: TaskStreams): SignatureCheckResult

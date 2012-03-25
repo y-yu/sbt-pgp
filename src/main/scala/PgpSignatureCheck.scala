@@ -7,6 +7,7 @@ import Keys._
 import sbt.Project.Initialize
 import complete.Parser
 import complete.DefaultParsers._
+import packageobject._
 
 /** Configuration class for an Ivy module that will pull PGP signatures. */
 final case class GetSignaturesModule(id: ModuleID, modules: Seq[ModuleID], configurations: Seq[Configuration])
@@ -60,7 +61,7 @@ object PgpSignatureCheck {
     val baseModules = modules map { m => restrictedCopy(m, false) }
     val deps = baseModules.distinct flatMap signatureArtifacts
     val base = restrictedCopy(id, true)
-    val module = new ivySbt.Module(InlineConfiguration(base, ModuleInfo(base.name), deps).copy(ivyScala = ivyScala, configurations = confs))
+    val module = new ivySbt.Module(InlineConfiguration(base, deps).copy(ivyScala = ivyScala, configurations = confs))
     val upConf = new UpdateConfiguration(c.retrieve, true, c.logging)
 		IvyActions.update(module, upConf, log)
   }

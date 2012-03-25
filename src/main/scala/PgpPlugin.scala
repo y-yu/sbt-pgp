@@ -10,6 +10,7 @@ import complete.Parser
 import complete.DefaultParsers._
 import SbtHelpers._
 import PgpKeys._
+import packageobject._
 
 /**
  * Plugin for doing PGP security tasks.  Signing, verifying, etc.
@@ -43,10 +44,11 @@ object PgpPlugin extends Plugin {
     // Create a new task that executes the command.
     val task = extracted get pgpCmdContext map (cmd run) named ("pgp-cmd-" + cmd.getClass.getSimpleName)
     import EvaluateTask._
-    val (newstate, _) = withStreams(extracted.structure, state) { streams =>
-      runTask(task, state, streams, extracted.structure.index.triggers)(nodeView(state, streams))
+    
+    withStreams(extracted.structure) { streams =>
+      runTask(task, streams, extracted.structure.index.triggers)(nodeView(state, streams))
     }
-    newstate
+    state
   }
   
   /** Configuration for BC JVM-local PGP */
@@ -89,8 +91,8 @@ object PgpPlugin extends Plugin {
   lazy val configurationSettings: Seq[Setting[_]] = gpgConfigurationSettings ++ nativeConfigurationSettings ++ Seq(
     // TODO - move these to the signArtifactSettings?
     skip in pgpSigner := false,
-    pgpSigner <<= switch(useGpg, gpgSigner, bcPgpSigner),
-    pgpVerifier <<= switch(useGpg, gpgVerifier, bcPgpVerifier)
+    pgpSigner <<= switch(useGpg identity, gpgSigner, bcPgpSigner),
+    pgpVerifier <<= switch(useGpg identity, gpgVerifier, bcPgpVerifier)
   ) 
   /** Configuration for signing artifacts.  If you use new scopes for
    * packagedArtifacts, you need to add this in that scope to your build.

@@ -21,7 +21,7 @@ case class SbtPgpCommandContext(
     SimpleReader.readLine(msg) getOrElse sys.error("Failed to grab input")
   }
   def readHidden(msg: String): String = System.out.synchronized {
-    SimpleReader.readLine(msg, Some('*')) getOrElse sys.error("Failed to grab input")
+    SimpleReader.readLine(msg) getOrElse sys.error("Failed to grab input")
   }
   def inputPassphrase = readHidden("Please enter PGP passphrase: ").toCharArray
   def withPassphrase[U](f: Array[Char] => U): U =

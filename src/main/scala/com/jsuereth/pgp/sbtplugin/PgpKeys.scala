@@ -31,4 +31,6 @@ object PgpKeys {
   val signaturesModule = TaskKey[GetSignaturesModule]("signatures-module")
   val updatePgpSignatures = TaskKey[UpdateReport]("update-pgp-signatures", "Resolves and optionally retrieves signatures for artifacts, transitively.")
   val checkPgpSignatures = TaskKey[SignatureCheckReport]("check-pgp-signatures", "Checks the signatures of artifacts to see if they are trusted.")
+
+  val skip = TaskKey[Boolean]("skip")
 }
