@@ -60,9 +60,11 @@ object Sonatype {
 }
 
 object GpgBuild extends Build {
+  val gpgPluginVersion = "0.7-SNAPSHOT"
+
   val defaultSettings: Seq[Setting[_]] = Seq(
     organization := "com.jsuereth",
-    version <<= sbtVersion { sv => "sbt%s_0.7-SNAPSHOT" format sv },
+    version := gpgPluginVersion,
     // publishTo <<= (version) { v =>
     //   import Classpaths._
     //   Option(if(v endsWith "SNAPSHOT") typesafeSnapshots else typesafeResolver)
@@ -73,7 +75,8 @@ object GpgBuild extends Build {
 
   val plugin = Project("plugin", file(".")) dependsOn(library) settings(defaultSettings:_*) settings(
     sbtPlugin := true,
-    name := "xsbt-gpg-plugin"
+    name := "xsbt-gpg-plugin",
+    version <<= sbtVersion { sv => "sbt%s_%s" format (sv, gpgPluginVersion) }
   ) /* settings(websiteSettings:_*) */ settings(
     //tmp workaround
     libraryDependencies += "net.databinder" %% "dispatch-http" % "0.8.6")
