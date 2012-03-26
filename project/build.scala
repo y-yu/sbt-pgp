@@ -70,6 +70,7 @@ object GpgBuild extends Build {
     //   Option(if(v endsWith "SNAPSHOT") typesafeSnapshots else typesafeResolver)
     // },
     publishMavenStyle := false,
+    credentials += Credentials(Path.userHome / ".ivy2" / ".sbtcredentials"),
     publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
   )
 
