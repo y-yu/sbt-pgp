@@ -9,7 +9,7 @@ object App {
   }
 }
 
-case class Exit(val code: Int) extends xsbti.Exit(code)
+case class Exit(val code: Int) extends xsbti.Exit
 
 class Script extends AppMain {
   def run(conf: AppConfiguration) =
@@ -17,7 +17,7 @@ class Script extends AppMain {
 }
 
 object Main {
-  def main(arg: Array[String]) {
+  def main(args: Array[String]) {
     App(args)
   }
 }
