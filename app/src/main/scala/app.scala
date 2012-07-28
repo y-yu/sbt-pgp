@@ -3,8 +3,9 @@ package com.jsuereth.app
 import xsbti.{ AppMain, AppConfiguration }
 
 object App {
-  def apply(args: Array[String]) {
-    // pgp stuff here
+  def apply(args: Array[String]) : Int = {
+    println("pgp me")
+    0
   }
 }
 
