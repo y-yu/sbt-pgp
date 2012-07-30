@@ -11,12 +11,18 @@ object App {
   def apply(args: Array[String]) : Int = {
     val (ctx, rargs) = Config.readArgs(args)
     val parser = PgpCommand.parser(ctx)
-    
-    (DefaultParsers(parser)(args mkString " ")).result match {
+    val cmdString = args mkString " "
+    val parsed = (DefaultParsers(parser)(cmdString)) 
+    parsed.result match {
       case Some(cmd) =>
         cmd run ctx
       case None =>
-        sys error ("Could not parse command line: " + args)
+        System.err.println("Invalid Command: " + cmdString)
+        System.err.println("Did you mean: ")
+        for(completion <- parsed.completions(5).get) {
+          System.err.println(">  " + completion.display)
+        }
+        sys.error("Unable to complete spgp command!")
     }
     0
   }
