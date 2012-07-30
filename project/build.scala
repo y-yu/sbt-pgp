@@ -105,7 +105,7 @@ object GpgBuild extends Build {
           "org.scala-sbt" % "launcher-interface" % v % "provided"
       }
     }
-  ) dependsOn(library)
+  ) dependsOn(plugin)
 
   def websiteSettings: Seq[Setting[_]] = (
     site.settings ++ 

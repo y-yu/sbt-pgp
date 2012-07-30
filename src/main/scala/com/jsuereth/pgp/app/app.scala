@@ -1,10 +1,20 @@
-package com.jsuereth.app
+package com.jsuereth.pgp
+package app
+
+import cli._
 
 import xsbti.{ AppMain, AppConfiguration }
 
 object App {
   def apply(args: Array[String]) : Int = {
-    println("pgp me")
+    val (ctx, rargs) = Config.readArgs(args)
+    val parser = PgpCommand.parser(ctx)
+    (parser !!! (args mkString " ")).result match {
+      case Some(cmd) =>
+        cmd run ctx
+      case None =>
+        sys error ("Could not parse command line: " + args)
+    }
     0
   }
 }

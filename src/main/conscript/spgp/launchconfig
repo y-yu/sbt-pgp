@@ -1,11 +1,11 @@
 [app]
   version: 0.7-SNAPSHOT
   org: com.jsuereth
-  name: spgp
-  class: com.jsuereth.app.Script
+  name: xsbt-gpg-plugin
+  class: com.jsuereth.pgp.app.Script
 [scala]
   version: 2.9.1
 [repositories]
   local
   maven-central
-  sonatype-releases: https://oss.sonatype.org/content/repositories/releases/
+  sbt-plugin-releases: http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
