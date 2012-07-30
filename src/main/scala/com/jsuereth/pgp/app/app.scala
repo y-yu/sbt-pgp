@@ -3,13 +3,16 @@ package app
 
 import cli._
 
+import sbt.complete.DefaultParsers
+
 import xsbti.{ AppMain, AppConfiguration }
 
 object App {
   def apply(args: Array[String]) : Int = {
     val (ctx, rargs) = Config.readArgs(args)
     val parser = PgpCommand.parser(ctx)
-    (parser !!! (args mkString " ")).result match {
+    
+    (DefaultParsers(parser)(args mkString " ")).result match {
       case Some(cmd) =>
         cmd run ctx
       case None =>
